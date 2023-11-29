@@ -68,8 +68,8 @@ class SubscribeView(APIView):
 
 class SubscribeOrderView(APIView):
     def get(self, request, pk=None):
-        cab_view = check_permission('view_subscribeorder', request)
-        if cab_view:
+        can_view = check_permission('view_subscribeorder', request)
+        if can_view:
             if pk:
                 instance = object_is_exist(pk=pk, model=SubscribeOrder)
                 serialzier = SubscribeOrderSerializer(instance)
@@ -127,16 +127,61 @@ class SubscribeOrderView(APIView):
 # need to use auth and permissions
 class SubscribeContractView(APIView):
     def get(self, request, pk=None):
-        pass
+        can_view = check_permission('view_subscribecontract', request)
+        if can_view:
+            if pk:
+                instance = object_is_exist(pk=pk, model=SubscribeContract)
+                serialzier = SubscribeContractSerializer(instance)
+            else:
+                queryset = SubscribeContract.objects.all()
+                serialzier = SubscribeContractSerializer(queryset, many=True)
+            return Response(serialzier.data)
+        else:
+            return Response({'Message': 'you do not have access to perform that action'})
     
     def post(self, request):
-        pass
+        can_add = check_permission('add_subscribecontract', request)
+        if can_add:
+            serializer = SubscribeContractSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            else:
+                return Response(serializer.errors)
+        else:
+            return Response({'Message': 'you do not have access to perform that action'})
 
     def put(self, request, pk):
-        pass
+        can_update = check_permission('change_subscribecontract', request)
+        if can_update:
+            instance = object_is_exist(pk=pk, model=SubscribeContract)
+            serializer = SubscribeContractSerializer(instance, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            else:
+                return Response(serializer.errors)
+        else:
+            return Response({'Message': 'you do not have access to perform that action'})
 
     def patch(self, request, pk):
-        pass
+        can_update = check_permission('change_subscribecontract', request)
+        if can_update:
+            instance = object_is_exist(pk=pk, model=SubscribeContract)
+            serializer = SubscribeContractSerializer(instance, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            else:
+                return Response(serializer.errors)
+        else:
+            return Response({'Message': 'you do not have access to perform that action'})
 
     def delete(self, request, pk):
-        pass
+        can_delete = check_permission('delete_subscribecontract', request)
+        if can_delete:
+            instance = object_is_exist(pk=pk, model=SubscribeContract)
+            instance.delete()
+            return Response({'Message': 'subscribe contract has been deleted successfully'})
+        else:
+            return Response({'Message': 'you do not have access to perform that action'})

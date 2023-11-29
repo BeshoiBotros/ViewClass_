@@ -1,4 +1,5 @@
 from django.db import models
+from users.models import CustomUser
 
 class Subscribe(models.Model):
     name = models.CharField(max_length=255)
@@ -14,6 +15,7 @@ class Subscribe(models.Model):
 class SubscribeOrder(models.Model):
     requestStatusChoices = (('underProcess', 'تحت الاجراء'), ('accepted', 'مقبول'), ('rejected', 'مرفوض'), ('canceled', 'ملغي'), ('other', 'اخرى'))
     subscribe = models.ForeignKey(Subscribe, on_delete=models.CASCADE)
+    companyuser = models.ForeignKey(CustomUser, on_delete=models.CASCADE,null=True, blank=True)
     companyName = models.CharField(max_length=255)
     companyAddres = models.TextField(null=False, blank=False)
     companyID = models.FileField(upload_to='companyID/')
@@ -40,3 +42,4 @@ class SubscribeContract(models.Model):
     contractDiscription = models.TextField(null=True, blank=True)
     contractAproval = models.BooleanField(default=False)
     isActive = models.BooleanField(default=False)
+
