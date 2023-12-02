@@ -18,6 +18,7 @@ class SubscribeOrder(models.Model):
     companyuser = models.ForeignKey(CustomUser, on_delete=models.CASCADE,null=True, blank=True)
     companyName = models.CharField(max_length=255)
     companyAddres = models.TextField(null=False, blank=False)
+    companyNo = models.CharField(max_length=200, blank=True,default='')
     companyID = models.FileField(upload_to='companyID/')
     companyURL = models.URLField(null=True, blank=True)
     companyEmail = models.EmailField(null=True, blank=True)
