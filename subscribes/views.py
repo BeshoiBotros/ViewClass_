@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from .models import Subscribe, SubscribeContract, SubscribeOrder
 from .serializers import SubscribeSerializer, SubscribeContractSerializer, SubscribeOrderSerializer
 from .shortcuts import check_permission, object_is_exist
+from rest_framework_recaptcha.fields import ReCaptchaValidator
+from viewclass.settings import DRF_RECAPTCHA_SECRET_KEY
 
 # need to use auth and permissions
 class SubscribeView(APIView):
@@ -82,7 +84,13 @@ class SubscribeOrderView(APIView):
     
     def post(self, request):
         serializer = SubscribeOrderSerializer(data=request.data)
+        
         if serializer.is_valid():
+            # capacha = serializer.validated_data['captcha']
+            # capacha_validator = ReCaptchaValidator(secret_key=RECAPTCHA_PRIVATE_KEY)
+            # capacha_valid = capacha_validator(capacha)
+            # if not capacha_valid:
+            #     return Response({'Error':'reCAPTCHA validation failed'})
             serializer.save()
             return Response(serializer.data)
         else:

@@ -11,8 +11,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-#&l$7%h#0-ume&8r_4h0w6-4=64_b1zwf!&r!6et@v5=3@#y!1'
-CAPACHA_PUBLIC_KEY = '6Lff6SIpAAAAAJFb0gj-jSWSqUtaQ8mVn77XjC08'
-CAPACHA_PRIVATE_KEY = '6Lff6SIpAAAAANPCwAL7W87pZSa32JMV30nDfI8A'
+DRF_RECAPTCHA_VERIFY_ENDPOINT = 'https://www.google.com/recaptcha/api/6Lff6SIpAAAAAJFb0gj-jSWSqUtaQ8mVn77XjC08'
+DRF_RECAPTCHA_SECRET_KEY  = '6Lff6SIpAAAAANPCwAL7W87pZSa32JMV30nDfI8A'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -32,7 +32,7 @@ INSTALLED_APPS = [
     'subscribes',
     'rest_framework_simplejwt',
     'users',
-    'rest_framework_recaptcha',
+    "rest_framework_recaptcha",
 ]
 
 MIDDLEWARE = [

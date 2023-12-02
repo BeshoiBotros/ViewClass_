@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Subscribe, SubscribeContract, SubscribeOrder
+from rest_framework_recaptcha.fields import ReCaptchaField
 
 class SubscribeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -13,6 +14,7 @@ class SubscribeContractSerializer(serializers.ModelSerializer):
 
 
 class SubscribeOrderSerializer(serializers.ModelSerializer):
+    recaptcha = ReCaptchaField()
     class Meta:
         model = SubscribeOrder
         fields = '__all__'
